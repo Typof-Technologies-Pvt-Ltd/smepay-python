@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "smepay"
+dynamic = ["version"]
+description = "Official Python SDK for the SMEPay External API (UPI payments)."
+requires-python = ">=3.8"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Typof Technologies Pvt Ltd" }]
+keywords = ["smepay", "upi", "payments", "sdk"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Office/Business :: Financial",
+  "Typing :: Typed",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/mahi-qwe/smepay-python#readme"
+Source = "https://github.com/mahi-qwe/smepay-python"
+Issues = "https://github.com/mahi-qwe/smepay-python/issues"
+
+[tool.hatch.version]
+path = "src/smepay/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/smepay"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/smepay", "LICENSE", "README.md", "pyproject.toml"]
+
+[tool.ruff]
+target-version = "py38"
+line-length = 120
+
+[tool.mypy]
+strict = true
+files = ["src"]
