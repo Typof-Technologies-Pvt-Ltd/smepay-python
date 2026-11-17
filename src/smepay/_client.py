@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from typing import Any, Literal, Mapping
 
-from ._auth import _TokenManager
+from ._auth import TokenManager
 from ._errors import SMEPayError
 from ._http import post_json
+from ._payment import PaymentResource
 
 Environment = Literal["test", "live"]
 
@@ -17,19 +18,19 @@ _BASE_URLS = {
 _TOKEN_ERROR_CODES = {"invalid_token", "invalid_external_token", "invalid_token_type"}
 
 
-class _ApiClient:
+class ApiClient:
     """Authenticated POSTs with client_id added to every body."""
 
     def __init__(self, base_url: str, client_id: str, client_secret: str) -> None:
         self._base_url = base_url
         self._client_id = client_id
-        self._auth = _TokenManager(base_url, client_id, client_secret)
+        self._auth = TokenManager(base_url, client_id, client_secret)
 
     def __repr__(self) -> str:
-        return "_ApiClient()"
+        return "ApiClient()"
 
     def post(self, path: str, params: Mapping[str, Any]) -> dict[str, Any]:
-        body = {**params, "client_id": self._client_id}
+        body: dict[str, Any] = {**params, "client_id": self._client_id}
         token = self._auth.get_token()
         try:
             return post_json(self._base_url, path, body, token=token)
@@ -51,15 +52,18 @@ class SMEPay:
     """
 
     def __init__(self, *, client_id: str, client_secret: str, environment: Environment = "test") -> None:
-        if not isinstance(client_id, str) or not client_id.strip():
+        # Falsy check also catches None from an unset environment variable.
+        if not client_id or not client_id.strip():
             raise SMEPayError("invalid_config", "client_id is required")
-        if not isinstance(client_secret, str) or not client_secret.strip():
+        if not client_secret or not client_secret.strip():
             raise SMEPayError("invalid_config", "client_secret is required")
         if environment not in _BASE_URLS:
             raise SMEPayError("invalid_config", f'environment must be "test" or "live", got {environment!r}')
 
         self._environment: Environment = environment
-        self._api = _ApiClient(_BASE_URLS[environment], client_id.strip(), client_secret.strip())
+        self._api = ApiClient(_BASE_URLS[environment], client_id.strip(), client_secret.strip())
+        self.payment = PaymentResource(self._api)
+        """Payment calls: ``create`` → ``initiate`` → ``get_status``."""
 
     @property
     def environment(self) -> Environment:

@@ -34,4 +34,5 @@ class SMEPayError(Exception):
 def _redact(value: Any) -> Any:
     if not isinstance(value, dict):
         return value
-    return {k: "[redacted]" if str(k).lower() in _SENSITIVE_KEYS else v for k, v in value.items()}
+    items: dict[Any, Any] = value  # pyright: ignore[reportUnknownVariableType]
+    return {k: "[redacted]" if str(k).lower() in _SENSITIVE_KEYS else v for k, v in items.items()}

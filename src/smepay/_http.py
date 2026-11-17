@@ -4,7 +4,7 @@ import json
 import socket
 import urllib.error
 import urllib.request
-from typing import Any, Mapping
+from typing import Any, Dict, Mapping, cast
 
 from ._errors import SMEPayError
 from ._version import __version__
@@ -75,12 +75,12 @@ def post_json(
             status_code=status,
             raw=data,
         )
-    return data
+    return cast(Dict[str, Any], data)
 
 
 def _api_error(status: int, data: Any) -> SMEPayError:
     """Build an SMEPayError from an API error reply: {error, message} or {error, errors}."""
-    body: dict[str, Any] = data if isinstance(data, dict) else {}
+    body = cast(Dict[str, Any], data) if isinstance(data, dict) else {}
     error = body.get("error")
     code = error if isinstance(error, str) and error else "api_error"
 

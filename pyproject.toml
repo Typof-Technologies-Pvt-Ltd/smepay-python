@@ -40,6 +40,15 @@ include = ["src/smepay", "LICENSE", "README.md", "pyproject.toml"]
 target-version = "py38"
 line-length = 120
 
+[tool.ruff.lint.per-file-ignores]
+# TypedDicts keep typing.Dict/Optional so runtime hint readers work on Python 3.8.
+"src/smepay/_types.py" = ["UP006", "UP045"]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+pythonVersion = "3.8"
+include = ["src"]
+
 [tool.mypy]
 strict = true
 files = ["src"]

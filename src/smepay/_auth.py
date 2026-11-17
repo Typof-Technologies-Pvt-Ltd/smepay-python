@@ -11,7 +11,7 @@ _AUTH_PATH = "/api/external/auth"
 _REFRESH_MARGIN_SECONDS = 60.0
 
 
-class _TokenManager:
+class TokenManager:
     """Logs in with client_id/client_secret and caches the access token.
 
     The lock is held during login, so concurrent threads share a single login.
@@ -26,7 +26,7 @@ class _TokenManager:
         self._expires_at = 0.0
 
     def __repr__(self) -> str:
-        return "_TokenManager()"
+        return "TokenManager()"
 
     def get_token(self) -> str:
         """Return the cached token, or log in if there is none or it is about to expire."""
