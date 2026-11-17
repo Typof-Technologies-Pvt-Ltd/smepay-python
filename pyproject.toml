@@ -6,6 +6,7 @@ build-backend = "hatchling.build"
 name = "smepay"
 dynamic = ["version"]
 description = "Official Python SDK for the SMEPay External API (UPI payments)."
+readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -47,8 +48,8 @@ line-length = 120
 [tool.pyright]
 typeCheckingMode = "strict"
 pythonVersion = "3.8"
-include = ["src"]
+include = ["src", "examples"]
 
 [tool.mypy]
 strict = true
-files = ["src"]
+files = ["src", "examples"]
