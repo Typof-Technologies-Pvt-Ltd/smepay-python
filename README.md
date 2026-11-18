@@ -95,7 +95,7 @@ Use the SDK only on your server. Keep `client_secret` in an environment variable
 
 ## Example
 
-[`examples/full_flow.py`](https://github.com/mahi-qwe/smepay-python/blob/main/examples/full_flow.py): put `SMEPAY_CLIENT_ID` / `SMEPAY_CLIENT_SECRET` in `.env`, then `set -a; source .env; set +a; python examples/full_flow.py`.
+[`examples/full_flow.py`](https://github.com/Typof-Technologies-Pvt-Ltd/smepay-python/blob/main/examples/full_flow.py): put `SMEPAY_CLIENT_ID` / `SMEPAY_CLIENT_SECRET` in `.env`, then `set -a; source .env; set +a; python examples/full_flow.py`.
 
 ## License
 

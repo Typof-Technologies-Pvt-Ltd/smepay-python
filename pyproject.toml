@@ -24,9 +24,9 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/mahi-qwe/smepay-python#readme"
-Source = "https://github.com/mahi-qwe/smepay-python"
-Issues = "https://github.com/mahi-qwe/smepay-python/issues"
+Homepage = "https://github.com/Typof-Technologies-Pvt-Ltd/smepay-python#readme"
+Source = "https://github.com/Typof-Technologies-Pvt-Ltd/smepay-python"
+Issues = "https://github.com/Typof-Technologies-Pvt-Ltd/smepay-python/issues"
 
 [tool.hatch.version]
 path = "src/smepay/_version.py"
