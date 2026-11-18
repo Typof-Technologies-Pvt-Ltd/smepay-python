@@ -65,8 +65,9 @@ except smepay.SMEPayError as e:
 | `invalid_config` | Missing `client_id` / `client_secret`, or bad `environment` |
 | `invalid_client_id`, `invalid_credentials` | Wrong credentials |
 | `environment_mismatch` | `environment` doesn't match your business's mode |
-| `ip_not_whitelisted` | Live: your server IP isn't whitelisted |
-| `insufficient_wallet_balance`, `wallet_validation_failed` | Live: wallet balance too low |
+| `ip_not_whitelisted` | Live: your server IP isn't whitelisted (ask SMEPay support) |
+| `api_not_enabled` | External API not enabled for your business (contact SMEPay) |
+| `insufficient_wallet_balance`, `wallet_validation_failed` | Wallet balance too low (live needs ≥ ₹10) |
 | `invalid_request`, `validation_error` | Missing or invalid field |
 | `amount_below_minimum`, `amount_exceeds_maximum` | Amount outside your allowed range |
 | `duplicate_order_id` | `order_id` already used |
@@ -86,7 +87,7 @@ Calls are never retried automatically, so a failed `create` is never sent twice.
 
 ## Webhooks
 
-When a payment finishes, SMEPay POSTs `ref_id`, `transaction_id`, `status`, `amount`, `created_at`, `processed_at` and `utr` to your `callback_url`. Confirm with `payment.get_status` before marking an order paid.
+When a payment finishes, SMEPay POSTs JSON to your `callback_url`: `ref_id` (your order ID), `status`, `transaction_id`, `amount` (string, e.g. `"100.00"`), `created_at` / `processed_at` (ISO-8601) and `utr` (when available). Reply with any `2xx` quickly; other replies are retried, so handle duplicates. Confirm with `payment.get_status` before marking an order paid.
 
 ## Security
 
