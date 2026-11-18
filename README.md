@@ -46,7 +46,7 @@ Create one client and reuse it. Arguments and reply keys match the API exactly; 
 
 `initiate` can be called again if a payment failed or expired. Alternatively, skip `initiate` and redirect the customer to `payment_url` (the hosted page); use one or the other per order.
 
-**Statuses:** `CREATED` → `INITIATED` / `PENDING` → `SUCCESS` or `FAILED` / `EXPIRED`; also `SETTLED`, `REFUNDED`, `REFUND_PENDING`. Test-mode businesses get `TEST_SUCCESS`, `TEST_FAILED`, `TEST_PENDING`.
+**Statuses:** `CREATED` → `INITIATED` / `PENDING` → `SUCCESS` or `FAILED` / `EXPIRED`; also `REFUNDED`, `REFUND_PENDING`. Test-mode businesses get `TEST_SUCCESS`, `TEST_FAILED`, `TEST_PENDING`.
 
 ## Errors
 
@@ -87,7 +87,7 @@ Calls are never retried automatically, so a failed `create` is never sent twice.
 
 ## Webhooks
 
-When a payment finishes, SMEPay POSTs JSON to your `callback_url`: `ref_id` (your order ID), `status`, `transaction_id`, `amount` (string, e.g. `"100.00"`), `created_at` / `processed_at` (ISO-8601) and `utr` (when available). Reply with any `2xx` quickly; other replies are retried, so handle duplicates. Confirm with `payment.get_status` before marking an order paid.
+When an order reaches a final result (`SUCCESS` / `FAILED` / `REFUNDED`), SMEPay POSTs JSON to your `callback_url`: `ref_id` (your order ID), `status`, `transaction_id`, `amount` (string, e.g. `"100.00"`), `created_at` / `processed_at` (ISO-8601) and `utr` (when available). Reply with `2xx` quickly; if your server is down or returns `5xx` it is retried (up to 12 h), `4xx` is not, so handle duplicates. Confirm with `payment.get_status` before marking an order paid.
 
 ## Security
 
