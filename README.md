@@ -63,8 +63,8 @@ except smepay.SMEPayError as e:
 | Code | Meaning |
 |---|---|
 | `invalid_config` | Missing `client_id` / `client_secret`, or bad `environment` |
-| `invalid_client_id`, `invalid_credentials` | Wrong credentials |
-| `environment_mismatch` | `environment` doesn't match your business's mode |
+| `invalid_client_id`, `invalid_credentials` | Wrong credentials (the Client Secret changes when you go live) |
+| `invalid_endpoint` | `environment` doesn't match your business's mode (see the Test/Live badge on API Credentials) |
 | `ip_not_whitelisted` | Live: your server IP isn't whitelisted (ask SMEPay support) |
 | `api_not_enabled` | External API not enabled for your business (contact SMEPay) |
 | `insufficient_wallet_balance`, `wallet_validation_failed` | Wallet balance too low (live needs ≥ ₹10) |
